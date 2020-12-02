@@ -1,0 +1,34 @@
+settings:
+  legacy:
+    force: false
+    interval: 0s
+schema:
+- name: sendgrid
+  path: .
+  commands:
+    build:
+      status: true
+      method: go build
+      # for mock
+#      args:
+#        - -tags
+#        - "mock"
+#        - -o
+#        - ./.realize/main
+#        - ./cmd/echo/
+      args:
+        - -o
+        - ./.realize/main
+        - ./cmd/echo/
+    run:
+      status: true
+      method: ./.realize/main
+  watcher:
+    extensions:
+    - go
+    paths:
+    - /
+    ignored_paths:
+    - .git
+    - .realize
+    - vendor

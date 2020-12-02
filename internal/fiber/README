@@ -1,0 +1,30 @@
+## fiber
+実行速度が速いとされているfiberの効果測定をしたディレクトリ。
+
+実際に使用する場合はこのディレクトリから実装を行ってください。
+
+
+## 効果測定
+
+公式のテスト結果はこちら
+
+https://www.techempower.com/benchmarks/#section=data-r19&hw=cl&test=plaintext
+
+効果測定するテストはこちら
+
+internal/app/bench_test.go
+
+テストポリシーはこちら
+
+https://github.com/TechEmpower/FrameworkBenchmarks/wiki/Project-Information-Framework-Tests-Overview#plaintext
+
+## 測定結果
+
+上記のURLにあるテストポリシーだとfiberの実行速度は早い。
+
+ただし、このテストを複数回行うと３次関数的に速度が落ちてくる。
+
+よって負荷に弱い可能性があるため、安定性のあるものを採用している。
+
+この結果は環境依存の可能性もあるが、このメモの記載時には導入を見送っている。
+

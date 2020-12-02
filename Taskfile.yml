@@ -1,0 +1,12 @@
+version: '3'
+
+tasks:
+  ensure:
+    cmds:
+      - go mod download
+
+  vet:
+    deps:
+      - ensure
+    cmds:
+      - go vet ./...
