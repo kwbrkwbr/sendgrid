@@ -1,0 +1,183 @@
+{
+	"info": {
+		"_postman_id": "da116b5b-5749-45b4-a490-f2380a19e0f6",
+		"name": "sendgrid",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "healthz",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{protocol}}{{host}}/healthz",
+					"host": [
+						"{{protocol}}{{host}}"
+					],
+					"path": [
+						"healthz"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "doze",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"sec\": 5\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{protocol}}{{host}}/doze",
+					"host": [
+						"{{protocol}}{{host}}"
+					],
+					"path": [
+						"doze"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mail",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"${title}\",\n    \"from\": \"postman@post.man\",\n    \"to\": \"t.kuwabara19820209@gmail.com\",\n    \"body\": \"${name}様\\n\\nありがとうございました。\\n\",\n    \"params\": \"{\\\"name\\\":\\\"kwbr\\\",\\\"title\\\":\\\"送信成功\\\"}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{protocol}}{{host}}/mail",
+					"host": [
+						"{{protocol}}{{host}}"
+					],
+					"path": [
+						"mail"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mail pubsub",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"message\": {\n        \"data\": \"ewogICAgInRpdGxlIjogIiR7dGl0bGV9IiwKICAgICJmcm9tIjogInBvc3RtYW5AcG9zdC5tYW4iLAogICAgInRvIjogInQua3V3YWJhcmFAYXhlbGVudGVybWVkaWEuanAiLAogICAgImJvZHkiOiAiJHtuYW1lfeanmFxuXG7jgYLjgorjgYzjgajjgYbjgZTjgZbjgYTjgb7jgZfjgZ/jgIJcbiIsCiAgICAicGFyYW1zIjogIntcIm5hbWVcIjpcIuOCqOODs+OCv+ODvOODoeODh+OCo+OColwiLFwidGl0bGVcIjpcIumAgeS/oeaIkOWKn1wifSIKfQ==\",\n        \"messageId\": \"1775834595284526\",\n        \"message_id\": \"1775834595284526\",\n        \"publishTime\": \"2020-11-26T08:13:06.699Z\",\n        \"publish_time\": \"2020-11-26T08:13:06.699Z\"\n    },\n    \"subscription\": \"projects/dev-packetlive/subscriptions/eventarc-us-central1-lsp-mailer-sub-952\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{protocol}}{{host}}/mail/pubsub",
+					"host": [
+						"{{protocol}}{{host}}"
+					],
+					"path": [
+						"mail",
+						"pubsub"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mail - validate error",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{protocol}}{{host}}/mail",
+					"host": [
+						"{{protocol}}{{host}}"
+					],
+					"path": [
+						"mail"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mail - invalid mail address",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"${title}\",\n    \"from\": \"postman@post.man\",\n    \"to\": \"t.kuwabara\",\n    \"body\": \"${name}様\\n\\nありがとうございました。\\n\",\n    \"params\": \"{\\\"name\\\":\\\"kwbr\\\",\\\"title\\\":\\\"送信成功\\\"}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{protocol}}{{host}}/mail",
+					"host": [
+						"{{protocol}}{{host}}"
+					],
+					"path": [
+						"mail"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "3b08cfef-ebe9-4f62-a248-405baa9ddd11",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "03c4e5b0-7fda-4012-8574-5e6fcbce7695",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
