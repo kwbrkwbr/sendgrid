@@ -17,13 +17,13 @@ func (v *Validator) Validate(i interface{}) error {
 	return v.Validator.Struct(i)
 }
 
-type LspmContext struct {
+type MyContext struct {
 	echo.Context
 	*pkg.Env
 	sendgrid.SgMailer
 }
 
-func (c *LspmContext) BindValidate(i interface{}) error {
+func (c *MyContext) BindValidate(i interface{}) error {
 	if err := c.Bind(i); err != nil {
 		return err
 	}
@@ -41,7 +41,7 @@ type LspmResponse struct {
 	Error        string `json:"error,omitempty"` // error.Error()をここにいれる予定
 }
 
-func (c *LspmContext) RequestID() string {
+func (c *MyContext) RequestID() string {
 	req := c.Request()
 	res := c.Response()
 	id := req.Header.Get(echo.HeaderXRequestID)
@@ -51,7 +51,7 @@ func (c *LspmContext) RequestID() string {
 	return id
 }
 
-func (c *LspmContext) ErrorInternalServer(err error) error {
+func (c *MyContext) ErrorInternalServer(err error) error {
 	c.Logger().Error(err)
 	r := LspmResponse{
 		ID:    c.RequestID(),
@@ -62,7 +62,7 @@ func (c *LspmContext) ErrorInternalServer(err error) error {
 	return c.JSON(http.StatusAccepted, r)
 }
 
-func (c *LspmContext) ErrorValidation(err error) error {
+func (c *MyContext) ErrorValidation(err error) error {
 	c.Logger().Error(err)
 	res := &LspmResponse{
 		ID:    c.RequestID(),
@@ -74,7 +74,7 @@ func (c *LspmContext) ErrorValidation(err error) error {
 	//return c.JSON(http.StatusAccepted, res)
 }
 
-func (c *LspmContext) ErrorSendGrid(err error) error {
+func (c *MyContext) ErrorSendGrid(err error) error {
 	c.Logger().Error(err)
 	r := &LspmResponse{
 		ID:           c.RequestID(),
@@ -86,7 +86,7 @@ func (c *LspmContext) ErrorSendGrid(err error) error {
 	return c.JSON(http.StatusAccepted, r)
 }
 
-func (c *LspmContext) ErrorSendGridResponse(code int, msg string) error {
+func (c *MyContext) ErrorSendGridResponse(code int, msg string) error {
 	c.Logger().Errorf("sendgrid error:code=%d,msg=%s", code, msg)
 	r := &LspmResponse{
 		ID:           c.RequestID(),
@@ -98,7 +98,7 @@ func (c *LspmContext) ErrorSendGridResponse(code int, msg string) error {
 	return c.JSON(http.StatusAccepted, r)
 }
 
-func (c *LspmContext) SuccessAccepted(code int, msg string) error {
+func (c *MyContext) SuccessAccepted(code int, msg string) error {
 	r := &LspmResponse{
 		ID:           c.RequestID(),
 		Code:         http.StatusAccepted,
@@ -108,10 +108,10 @@ func (c *LspmContext) SuccessAccepted(code int, msg string) error {
 	return c.JSON(http.StatusAccepted, r)
 }
 
-type handlerFunc func(c *LspmContext) error
+type handlerFunc func(c *MyContext) error
 
 func Wrap(h handlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		return h(c.(*LspmContext))
+		return h(c.(*MyContext))
 	}
 }

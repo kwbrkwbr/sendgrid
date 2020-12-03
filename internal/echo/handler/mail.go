@@ -22,7 +22,7 @@ type PubSubMessage struct {
 	Subscription string `json:"subscription"`
 }
 
-func Mail(c *context.LspmContext) error {
+func Mail(c *context.MyContext) error {
 	p := new(MailRequest)
 	if err := c.BindValidate(p); err != nil {
 		return c.ErrorValidation(err)
@@ -42,7 +42,7 @@ func Mail(c *context.LspmContext) error {
 	return c.SuccessAccepted(res.StatusCode, res.Body)
 }
 
-func MailPubSub(c *context.LspmContext) error {
+func MailPubSub(c *context.MyContext) error {
 	m := new(PubSubMessage)
 	if err := c.BindValidate(m); err != nil {
 		return c.ErrorValidation(err)

@@ -10,7 +10,7 @@ type DozeRequest struct {
 	Sec int `json:"sec"`
 }
 
-func Doze(c *context.LspmContext) error {
+func Doze(c *context.MyContext) error {
 	c.Logger().Debug("doze...")
 	r := new(DozeRequest)
 	c.BindValidate(r)

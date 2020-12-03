@@ -9,10 +9,10 @@ import (
 	"github.com/sirupsen/logrus"
 	"gopkg.in/tylerb/graceful.v1"
 	"os"
-	lspmContext "sendgrid/internal/echo/context"
+	myContext "sendgrid/internal/echo/context"
 	"sendgrid/internal/echo/handler"
 	"sendgrid/pkg"
-	lspmLog "sendgrid/pkg/log"
+	myLog "sendgrid/pkg/log"
 	"sendgrid/pkg/sendgrid"
 	"time"
 )
@@ -49,7 +49,7 @@ func (s Server) Run() {
 	}))
 	s.a.Use(middleware.RequestID())
 	s.a.Use(middleware.Logger())
-	s.a.Validator = &lspmContext.Validator{Validator: validator.New()}
+	s.a.Validator = &myContext.Validator{Validator: validator.New()}
 
 	// ログにリクエストIDを仕込むもの。共通でログに出したいならここを改造
 	s.a.Use(func(h echo.HandlerFunc) echo.HandlerFunc {
@@ -64,7 +64,7 @@ func (s Server) Run() {
 			l := logrus.New()
 			l.SetFormatter(&logrus.JSONFormatter{})
 			l.SetOutput(os.Stdout)
-			myLogger := &lspmLog.MyLogger{
+			myLogger := &myLog.MyLogger{
 				Logger:    l,
 				RequestID: id,
 			}
@@ -78,18 +78,18 @@ func (s Server) Run() {
 	// LspmContextをラップする
 	s.a.Use(func(h echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
-			return h(&lspmContext.LspmContext{Context: c, Env: s.e, SgMailer: s.c})
+			return h(&myContext.MyContext{Context: c, Env: s.e, SgMailer: s.c})
 		}
 	})
 
 	// health check
-	s.a.GET("/healthz", lspmContext.Wrap(handler.Healtz))
+	s.a.GET("/healthz", myContext.Wrap(handler.Healtz))
 	// health check
-	s.a.GET("/doze", lspmContext.Wrap(handler.Doze))
+	s.a.GET("/doze", myContext.Wrap(handler.Doze))
 	// 一般的なメール送信の利用を想定
-	s.a.POST("/mail", lspmContext.Wrap(handler.Mail))
+	s.a.POST("/mail", myContext.Wrap(handler.Mail))
 	// 一般的なメール送信の利用を想定(パラメータ埋め込みあり)
-	s.a.POST("/mail/pubsub", lspmContext.Wrap(handler.MailPubSub))
+	s.a.POST("/mail/pubsub", myContext.Wrap(handler.MailPubSub))
 
 	// graceful shutdown
 	//if err := graceful.ListenAndServe(s.a.Server, 10*time.Second); err != nil {

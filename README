@@ -18,7 +18,7 @@ pushしてきたものでsendgridAPIを叩く
        │    mail req    │               │                │                 │   
        │ ───────────────>               │                │                 │   
        │                │               │                │                 │   
-       │                │  triger push  │                │                 │   
+       │                │  trigger push │                │                 │   
        │                │ ──────────────>                │                 │   
        │                │               │                │                 │   
        │                │               │  sendgrid API  │                 │   

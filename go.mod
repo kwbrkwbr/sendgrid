@@ -15,6 +15,7 @@ require (
 	github.com/sendgrid/rest v2.6.2+incompatible
 	github.com/sendgrid/sendgrid-go v3.7.2+incompatible
 	github.com/sirupsen/logrus v1.7.0
+	github.com/stretchr/testify v1.4.0
 	golang.org/x/sys v0.0.0-20201119102817-f84b799fce68 // indirect
 	gopkg.in/tylerb/graceful.v1 v1.2.15
 )

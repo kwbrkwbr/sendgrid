@@ -5,6 +5,6 @@ import (
 	"sendgrid/internal/echo/context"
 )
 
-func Healtz(c *context.LspmContext) error {
+func Healtz(c *context.MyContext) error {
 	return c.String(http.StatusOK, "hc")
 }
